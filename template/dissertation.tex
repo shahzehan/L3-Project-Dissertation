@@ -5,6 +5,8 @@
 % Modified 
 
 \documentclass{l3proj}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 \begin{document}
 
@@ -38,9 +40,9 @@ The abstract goes here
 
 This paper presents a case study of the development of a sensor mapping software. The application takes data from a LIDAR sensor system like the SOPHIE LITE Electrical External ICD device. The application takes in the scan data and maps it onto a 3D or a 2D map to visualize the scanned data. Furthermore, the mapping function can simulate the sensor system.
 
-The paper begins with some background information about our customer and their proposal (section 2 \& 3). It then delves into details about our main application followed by a thorough recount of the software development process (sections 3 \& 4). 
+The paper begins with some background information about our customer and their proposal (section 2 \& 3). It then delves into details about our main application followed by a thorough recount of the software development process (sections 4 \& 5). 
 
-This is followed by our reflection about the project and key insights gained throughout the six to seven months of development (section 5). We finally conclude it with a brief look at the various software development practices we adopted and how closely our project’s progress was tied to the Professional Software Development course (section 6).
+This is followed by our reflection about the project and key insights gained throughout the six to seven months of development (section 6). We finally conclude it with a brief look at the various software development practices we adopted and how closely our project’s progress was tied to the Professional Software Development course (section 7).
 
 %==============================================================================
 \section{Our Customer}
@@ -85,25 +87,36 @@ Task 3 - Plot features from 3d map onto a video feed:
 
 Along with this, it was also requested to make the application open-source. To fulfill our tasks and carry out the request, we were recommended several APIs and software by our customers. Initially, we settled on CesiumJS and ElectronJS but over halfway through the project’s duration, we switched to ArcGIS + JavaFX due to the limitations of our earlier approach.
 
-\subsection{The CesiumJS + ElectronJS Application}
+\subsection{ElectronJSApp}
 
-CesiumJS is an open-source JavaScript library for creating static or dynamic 2D and 3D maps. It supports multiple platforms and was perfect for our intended use. We used ElectronJS, an open-source software framework based on Chromium, to create our application and ran the two in tandem on NodeJS which is an open-source JavaScript runtime environment.
+CesiumJS is an open-source JavaScript library for creating static or dynamic 2Dand 3D maps. It supports multiple platforms and was perfect for our intended use. We used ElectronJS, an open-source software framework based on Chromium, to create our application and ran the two in tandem on NodeJS which is an open-source JavaScript runtime environment.
 
-This application was extremely versatile. We had a wide range of 2D and 3D map data, provided natively by Cesium, at our disposal and there was extensive documentation available to help us understand and use Cesium’s many features. A python script was first used to simulate sensor data and plot points on the map, but this was later scrapped in favour of an Android application we developed which could send actual geographical data gathered from a phone’s GPS to the application by utilising WebSockets.
+This application is meant to be versatile, as Cesium can provide most of the data sets for 2D and 3D map features, we'd require. On top of this, the people at Cesium regularly update the extensive documentation with a sandbox feature to showcase their predominant features and how they can be integrated into a web-based application. A python script was first used to simulate sensor data and plot points on the map, but this was later scrapped in favour of an Android application we developed which could send actual geographical data gathered from a phone’s GPS to the application by utilising WebSockets.
 
-Alas, we soon ran into a few issues which made further development considerably harder, if not impossible. First off, Cesium was very slow. It was not at all noticeable while working with 2D maps but as soon as we made the jump to 3D, we saw considerable slowdowns with the application sometimes not loading the map at all. On top of that, we were unable to project visible rays from the camera for task 2b and the only solution we found involved buying a license for one of Cesium’s SDKs which would’ve meant our application was no longer open-source.
+Cesium is a great API for displaying geospatial information within a web browser, making it lightweight, and easy to distribute on a massive scale, meaning it'd be great for displaying static data which does not change a lot, however, one of its major drawbacks is not being able to utilize the GPU on a computer, which would be the main platform for our application to be run on, this meant that having a constantly updating data stream would bog down the performance of the application, hence not being satisfactory enough for our vision of the product.
+
+On top of the above-mentioned issues, we were also unable to project visibility rays within the 3D world hence not knowing where our targets would be located as they would be rendered in without having geospatial information attached to it. One of the solutions that'd allow us to overcome this roadblock would be to purchase the Cesium ion SDK licence, therefore making it proprietary software and being over-budget.
 
 These issues, combined with the application not deploying on anything but Windows and not being able to have unit tests, meant that we had reached the end of the road with Cesium and had to find a new approach to our project.
 
-\subsection{The ArcGIS + JavaFX Application}
+\includegraphics[width=\textwidth]{ElectronJSApp2}
 
-ArcGIS was our answer to Cesium’s shortcomings. It is a geographic information system maintained by the Environmental Systems Research Institute (Esri) which can do almost everything Cesium can alongside some of its exclusive capabilities. The application was created on the JavaFX software platform which is cross-platform and supports a wide variety of devices.
 
-The new application was everything we wanted out of our old one. Visible rays from a camera could be projected fairly easily with no additional cost. There is a proper field of view that can be moved around the map, like how a sensor might move, and the performance was better than what we had with the Cesium application. Like before, a python script was used to plot the points onto the map. Sadly the Android application fell out of use due to time constraints as we had to change it to support the new application.
+\subsection{ThalesArc}
 
-Instead, we were able to implement a few extra features. There’s a detailed log of all the points on the map. The points themselves can be saved to a JSON file for backup and loaded again when needed. A script was embedded which simulated a potential path the sensor could take – moving the FOV cone and plotting and logging points as it went.
+ArcGIS Pro was our answer to Cesium’s shortcomings. This is a geographic information system software developed by the Environmental Systems Research Institute (Esri) which supports an API based on a 64-bit architecture and combines support for 2D and 3D applications, used for geospatial processing programs. Making it a great contender to the previously maintained ElectronJSApp application. ArcGIS Pro was integrated onto the JavaFX client application platform supporting cross-platform development and releases.
 
-Unit tests were also added and the entire application itself was added to a CI pipeline successfully. We were not able to do task 3b since we ran out of time but our customers from Thales UK were happy with our progress and took the application from us under the MIT license.
+The new application was everything we had hoped to achieve but failed to with the ElectronJSApp. This new API allowed us to project the field-of-view rays from the camera, whilst utilising the GPUs capabilities, hence allowing us to move the field-of-view cone around on the map just like a senor would be based on the geographic coordinate system.
+
+Like before, a python script had now been modified to allow for sending JSON packets to the application which then converted them to Sensor objects, allowing us to have simulated data streams for plotting new user coordinates and target coordinates if given. However, due to time constraints, we were unable to further develop the Android simulator application to support the new ThalesArc app.
+
+Whilst also completing the minimum viable product we were able to implement a few extra features which the customer had mentioned within their product requirements draft. This included adding a detailed log of all the targets being shown to the user, functionality of loading, creating, and saving these logs within the user's directory, and also additional features which can be further developed if wished by the customer, such as having target paths, which can be abstracted to also display the users routing.
+
+Unit testing this time around had worked with the non-visual components and covered a few test cases on functions which we'd hope to return specific values regardless of the number of times they'd be used.
+
+After talking to the customer about how they'd wish to use the application we develop and discussing it internally with the team, we decided to use the MIT license which grants permissions and indemnify developers for future use. Specifically, it grants any person who obtains a copy of the software and associated files the right to use, copy, modify, merge, distribute, publish, sublicense, and sell copies of the software.
+
+\includegraphics[width=\textwidth]{ThalesARC2}
 
 
 %==============================================================================
@@ -112,6 +125,21 @@ Unit tests were also added and the entire application itself was added to a CI p
 
 %==============================================================================
 \section{Reflection and Insights}
+
+Although there were many ups and downs throughout this project and many days of frustration, it was very insightful and a great learning experience. Here are some of the things the members of our team have to say regarding everything:
+
+Krasimir: The project showed me the value of working in a team for a longer period of time. Furthermore, I learned how to go from a general project description to a complete application. I also improved my ability to gather requirements from customers which is vital in the industry.
+
+Atbaan: This project has helped me understand how there is so much more to being a software developer than just programming. It taught me how to interact with customers and my teammates over a long time period and it gave me "real-world experience" while still studying at the university.
+
+Shahzeb: My experience with the team project has been quite good. I met and got along with new people who I very much enjoyed working with. I got to experience some of the hardships that take place during the development of any software and gained a new appreciation for software developers. Most importantly, I learned a new set of skills that will come in handy should I ever take up software development in the future.
+
+Shayam:
+
+Vrinda: This project really helped me understand the intricacies of the software development process which is crucial for working in the industry. Working with a team for over 6 months helped me understand the importance of teamwork and dividing the work efficiently to achieve more in less amount of time.
+
+Krishang: The project helped me take a look into what software engineering practices could look like for a product that aims to be served as a demonstration tool, whilst also giving an insight into what it takes to create a product from the ground up while only being given a description of its potential features.
+
 
 
 %------------------------------------------------------------------------------
