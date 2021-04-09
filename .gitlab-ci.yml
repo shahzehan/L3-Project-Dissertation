@@ -3,7 +3,7 @@ build:
   tags:
     - docker
   script:
-    - cd template/
+    - cd dissertation/
     - latexmk -pdf dissertation.tex
   artifacts:
     paths:
