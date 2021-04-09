@@ -1,6 +1,7 @@
+image: blang/latex
 build:
   tags:
-    - latex
+    - docker 
   script:
     - cd dissertation/
     - latexmk -pdf dissertation.tex
