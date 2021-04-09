@@ -7,4 +7,4 @@ build:
     - latexmk -pdf dissertation.tex
   artifacts:
     paths:
-      - "*.pdf"
+      - "dissertation/*.pdf"
