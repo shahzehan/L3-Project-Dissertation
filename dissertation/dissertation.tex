@@ -6,7 +6,7 @@
 
 \documentclass{l3proj}
 \usepackage{graphicx}
-
+\usepackage{float}
 \graphicspath{ {./images/} }
 
 
@@ -119,7 +119,7 @@ Whilst writing down a few key features of the applications mentioned above would
 
 To realize our vision for the application it's beneficial to take a look at the wireframes developed within the first sprint of the software development lifecycle, which set out a concrete foundation for what the app would look like. As we can see in Figure 1, the wireframe is split into a few components, the left side is split off to log all the targets on the map, and a few more options for the user to choose between features and also displaying the current user location. The right side hosts the map which displays the field of view cone with the dead of ground information and users position.
 
-\begin{figure}[h]
+\begin{figure}[!h]
     \caption{Sample wireframe}
     \centering
     \includegraphics[width=\textwidth]{wireframe.jpg}
@@ -129,7 +129,7 @@ With the development of the product being split into two applications, starting 
 
 This segways into the second application we've developed as mentioned before which uses the ArcGIS Pro API. Which works in a more industry-standard fashion for mapping applications, where it uses data layers as a mechanism to display geographical datasets. The sample dataset we've used is located in Brest, France as it's provided by ArcGIS Pro out of the box.
 
-\begin{figure}[h]
+\begin{figure}[!h]
     \caption{Example of layers in ArcGIS}
     \centering
     \includegraphics[width=\textwidth]{GISLayers.jpg}
@@ -137,7 +137,7 @@ This segways into the second application we've developed as mentioned before whi
 
 In figure 2 we can see different layers being are used in the image to display a few map features. Taking a note from this example we've personally used 3 main layers, one for each, the user, the targets and the field of view, with other additional layers for extra features. This allows us to dynamically or statically update each layer on its own hence reducing lag, and allowing us to use GPU resources to render the graphic layers in dynamically in real-time. 
 
-\begin{figure}[h]
+\begin{figure}[H]
     \caption{ThalesArc line of sight visibility feature}
     \centering
     \includegraphics[width=\textwidth]{ArcGISLOS.jpg}
@@ -145,9 +145,8 @@ In figure 2 we can see different layers being are used in the image to display a
 
 Figure 3 showcases the feature, where we try and process the line of sight from a user to a target, which works by highlighting the line green if the point can be seen from the user and red if not.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \caption{ElectronJSApp line of sight visibility feature}
-    \centering
     \includegraphics[width=\textwidth]{ElectronJSLOS.jpg}
 \end{figure}
 
