@@ -41,7 +41,7 @@ This paper presents a case study of the development of a sensor mapping software
 %==============================================================================
 \section{Introduction}
 
-This paper presents a case study of the development of a sensor mapping software. The application takes data from a LIDAR sensor system like the SOPHIE LITE Electrical External ICD device. The application takes in the scan data and maps it onto a 3D or a 2D map to visualize the scanned data. Furthermore, the mapping function can simulate the sensor system.
+This paper presents a case study of the development of a sensor mapping software. The application takes data from a sensor system like the SOPHIE LITE Electrical External ICD device. The application takes in the scan data and maps it onto a 3D or a 2D map to visualize the scanned data. Furthermore, the mapping function can simulate the sensor system.
 
 The paper begins with some background information about our customer and their proposal (section 2 \& 3). It then delves into details about our main application followed by a thorough recount of the software development process (sections 4 \& 5). 
 
@@ -52,7 +52,7 @@ This is followed by our reflection about the project and key insights gained thr
 
 Thales Group is a French multinational company, founded in December 2000, that designs and builds electrical systems and provides services for the aerospace, defense, transportation, and security markets.\cite{wikipedia-Thales} The proposal that was given to our team, CS01, by the company’s UK branch. Thales UK approached the University of Glasgow Computer Science department to task a student development team to build a proof of concept of sensor data visualization and simulation application.
 
-Our customers consisted of Ian James, Iain Carrie, Matt Tucknott, and Christopher Dickson. Ian acted as our main point of contact and sponsor on behalf of Thales. Iain is the Project Technical Lead for Urban Canyon, one of Thales’ many ongoing projects, and was the main beneficiary of our application. Matt is a Thales Technical Expert on GIS (Geographic Information Systems) and has had over 20 years of experience in the field as well as 29 years of Java and C++. Christopher is a Thales Algorithms Engineer with over 19 years of software experience (Python, C++) and has 10 years of experience with image processing (OpenCV, Matlab).
+Our customers consisted of Ian James, Iain Carrie, Matt Tucknott, and Christopher Dickson. Ian acted as our main point of contact and sponsor on behalf of Thales. Iain is the Project Technical Lead for Urban Canyon, one of Thales’ many ongoing projects, and was the main beneficiary of our application. Matt is a Thales Technical Expert on Geographic Information Systems (GIS)  and has had over 20 years of experience in the field as well as 29 years of Java and C++. Christopher is a Thales Algorithms Engineer with over 19 years of software experience and has 10 years of experience with image processing.
 
 The way our customer’s team was structured was that Ian would be our main liaison. Most of our conversations were with him and he was the first to be informed of any issues or scheduling details for meetings from our end. Iain was the one who approved of or suggested many of our application’s features earlier on during development while Christopher and Matt provided development support. Matt in particular was integral for fixing one of the major roadblocks we faced over halfway through development (more on this later). 
 
@@ -103,9 +103,6 @@ On top of the above-mentioned issues, we were also unable to project visibility 
 
 These issues, combined with the application not deploying on anything but Windows, meant that we had reached the end of the road with Cesium and had to find a new approach to our project.
 
-\includegraphics[width=\textwidth]{ElectronJSApp2}
-
-
 \subsection{ThalesArc}
 
 ArcGIS Pro was our answer to Cesium’s shortcomings. This is a geographic information system software developed by the Environmental Systems Research Institute (Esri) which supports an API based on a 64-bit architecture and combines support for 2D and 3D applications, used for geospatial processing programs. Making it a great contender to the previously maintained ElectronJSApp application. ArcGIS Pro was integrated onto the JavaFX client application platform supporting cross-platform development and releases.
@@ -116,17 +113,52 @@ Like before, a python script had now been modified to allow for sending JSON pac
 
 Whilst also completing the minimum viable product we were able to implement a few extra features which the customer had mentioned within their product requirements draft. This included adding a detailed log of all the targets being shown to the user, functionality of loading, creating, and saving these logs within the user's directory, and also additional features which can be further developed if wished by the customer, such as having target paths, which can be abstracted to also display the users routing.
 
-Unit testing this time around had worked with the non-visual components and covered a few test cases on functions which we'd hope to return specific values regardless of the number of times they'd be used.
+\subsection{Application Comparisons}
 
-After talking to the customer about how they'd wish to use the application we develop and discussing it internally with the team, we decided to use the MIT license which grants permissions and indemnify developers for future use. Specifically, it grants any person who obtains a copy of the software and associated files the right to use, copy, modify, merge, distribute, publish, sublicense, and sell copies of the software.
+Whilst writing down a few key features of the applications mentioned above would be a good enough explanation to an GIS expert, it can also easily confuse someone new to mapping technologies. Hence providing a more detailed explanation and comparison between the applications.
 
-\includegraphics[width=\textwidth]{ThalesARC2}
+To realize our vision for the application it's beneficial to take a look at the wireframes developed within the first sprint of the software development lifecycle, which set out a concrete foundation for what the app would look like. As we can see in Figure 1, the wireframe is split into a few components, the left side is split off to log of all the targets on the map, and a few more options for the user to choose between features and also displaying the current user location. The right side hosts the map which displays the field of view cone with the dead of ground information and users position.
 
+\begin{figure}[h]
+    \caption{Sample wireframe}
+    \centering
+    \includegraphics[width=\textwidth]{wireframe.jpg}
+\end{figure}
+
+With the development of the product being split into two applications, starting of with the first , ElectronJSApp. We've provided a 2D map starting off in Glasgow. This application fulfills the customers Task 1, which establishes a relationship between what a sensor can see which then gets plotted onto the 2D map, for example we could spawn randomly generated points on-to the map and a fixed user location. However, a big issue we faced is the points get generated onto a single graphic layer, combined with the map, resulting in computationally expensive graphic processing, which a web browser is not capable of. Especially if we wanted to have the constant stream of data coming in and updating the users current location graphically while doing other processes. 
+
+This seaways into the second application we've developed as mentioned before which uses the ArcGIS Pro API. This works in a more industry standard procedure for mapping applications, where it uses data layers as a mechanism to display geographical datasets. The sample dataset we've used is located in Brest, France as it's provided by ArcGIS Pro out of the box.
+
+\begin{figure}[h]
+    \caption{Example of layers in ArcGIS}
+    \centering
+    \includegraphics[width=\textwidth]{GISLayers.jpg}
+\end{figure}
+
+In figure 2 we can see different layers being are used in the image to display a few map features. Taking a note from this example we've personally used 3 main layers, one for each, the user, the targets and the field of view, with other additional layers for extra features. This allows us to dynamically or statically update each layer on its own hence reducing lag, and allowing us to use GPU resources to render the graphic layers in dynamically in real time. 
+
+\begin{figure}[h]
+    \caption{ThalesArc line of sight visibility feature}
+    \centering
+    \includegraphics[width=\textwidth]{ArcGISLOS.jpg}
+\end{figure}
+
+Figure 3 showcases the feature, where we try and process the line of sight from a user to a target, which works by highlighting the line green if the point can be seen from the user and red if not.
+
+\begin{figure}[h]
+    \caption{ElectronJSApp line of sight visibility feature}
+    \centering
+    \includegraphics[width=\textwidth]{ElectronJSLOS.jpg}
+\end{figure}
+
+Trying to achieve this functionality in the ElectronJSApp required us to create many points in between the user and map to see weather or not it'd intersect with its surrounding terrain as seen in Figure 4. Whilst doing this process, the application gets resource hungry and start to bog down its overall performance. 
+
+Other miscellaneous features that have been included are vector representation for targets, this can be abstracted to be used for the users route or be disabled upon the users wish. Users can go back to original user location by clicking the "Update Camera" button, they also have the freedom to create, save and update the log files which are stored in the "LogFiles" directory, for which a sample file has also been provided for demonstration.
 
 %==============================================================================
 \section{Software Development Process}
 
-As detailed in the Project Proposal section of the report, a requirement was given to the development team by Thales UK outlining a support software for a sensor system. The requirement stated that the purpose of the application was to be a demo, that it would never be used as a live product. The development team kept this in focus throughout the planning and execution of the project. Furthermore, it is worth noting that the development team and the customer agreed that the produced software package will be open source with an MIT licence. The delivery of the software was heavily influenced by the software licence. The detailed requirements can be read in sections The Project Proposal and The Application. 
+As detailed in the Project Proposal section of the report, a requirement was given to the development team by Thales UK outlining a support software for a sensor system. The requirement stated that the purpose of the application was to be a demo, that it would never be used as a live product. The development team kept this in focus throughout the planning and execution of the project. Furthermore, it is worth noting that the development team and the customer agreed that the produced software repository will be under an open source licence also called the MIT licence, it grants any person who obtains a copy of the software and associated files the right to use, copy, modify, merge, distribute, publish, sublicense, and sell copies of the software. \cite{MIT_License}
 
 The development process the team used can be broken down into 4 sections. First, understanding the requirements given and formulating an action plan. Second, implementing the action plan, which was the development phase, that continued in parallel with the third phase. Third, testing the developed product. The fourth and last phase was the delivery of the produced software to the client. 
 
@@ -136,7 +168,7 @@ At the end of a sprint, there was an evaluation of the work that had been done, 
 
 The other method that was used to ensure the consistent quality of the software and to root out bugs was testing. The two methods that were used for testing was the traditional manual way, user testing; the other was an automated, robust method, Unit testing. The implemented tests had decent software coverage, however, Unit testing was not used for UI testing, therefore that was done manually by the team's testers. Gitlab runners were used to implementing Unit testing for both the core applications and the CI/CD pipelines. The tests were run as jobs on a UNIX machine. The development team planned on having Unit test jobs running across the entire application, however, due to unforeseen hurdles during the development test runners could not be set up for the display drivers. This meant the development team could not set up pipelines successfully for the ElectronJSApp, however, they were successful in creating the ThalesArc application pipeline. 
 
-Once the project was completed the delivery of the completed software product was done through Gitlab, where the development team set up a release branch. From the release branch, the customer could download the fully packaged applications. The instructions to access the release branch,  how to download and set up the application produced was shared with Thales UK during a formal handover. The software was fully handed over to the customer, the team took no responsibility for the further maintenance or development of the application. 
+Once the project deadline had been passed, the delivery of the completed application had begun, where we set up a release branch, accessible by the customers as they had previously been added onto the repository. From here both our applications have installation instructions provided for the customer to install the demonstration applications onto their servers, hence being fully handed over. Additionally the team has taken no further responsibility to maintain or develop the application. 
 %==============================================================================
 \section{Reflection and Insights}
 
