@@ -43,9 +43,9 @@ This paper presents a case study of the development of a sensor mapping software
 
 This paper presents a case study of the development of a sensor mapping software. The application takes data from a sensor system like the SOPHIE LITE Electrical External ICD device. The application takes in the scan data and maps it onto a 3D or a 2D map to visualize the scanned data. Furthermore, the mapping function can simulate the sensor system.
 
-The paper begins with some background information about our customer and their proposal (section 2 \& 3). It then delves into details about our main application followed by a thorough recount of the software development process (sections 4 \& 5). 
+The paper begins with some background information about our customer and their proposal (section 2 \& 3). It then delves into details about our main application followed by a thorough recount of the software development process (sections 4 \& 5) and a bit more about our version control system (sections 6). 
 
-This is followed by our reflection about the project and key insights gained throughout the six to seven months of development (section 6). We finally conclude it with a brief look at the various software development practices we adopted and how closely our project’s progress was tied to the Professional Software Development course (section 7).
+This is followed by our reflection about the project and key insights gained throughout the six to seven months of development (section 7). We finally conclude it with a brief look at the various software development practices we adopted and how closely our project’s progress was tied to the Professional Software Development course (section 8).
 
 %==============================================================================
 \section{Our Customer}
@@ -168,6 +168,17 @@ At the end of a sprint, there was an evaluation of the work that had been done, 
 The other method that was used to ensure the consistent quality of the software and to root out bugs was testing. The two methods that were used for testing was the traditional manual way, user testing; the other was an automated, robust method, Unit testing. The implemented tests had decent software coverage, however, Unit testing was not used for UI testing, therefore that was done manually by the team's testers. Gitlab runners were used to implementing Unit testing for both the core applications and the CI/CD pipelines. The tests were run as jobs on a UNIX machine. The development team planned on having Unit test jobs running across the entire application, however, due to unforeseen hurdles during the development test runners could not be set up for the display drivers. This meant the development team could not set up pipelines successfully for the ElectronJSApp, however, they were successful in creating the ThalesArc application pipeline. 
 
 Once the project deadline had been passed, the delivery of the completed application had begun, where we set up a release branch, accessible by the customers as they had previously been added onto the repository. From here both our applications have installation instructions provided for the customer to install the demonstration applications onto their servers, hence being fully handed over. Additionally the team has taken no further responsibility to maintain or develop the application. 
+
+
+%==============================================================================
+\section{Version Control}
+
+\subsection{Feature Branching}
+
+\subsection{Issue Tracking and Management}
+
+\subsection{Wiki}
+
 %==============================================================================
 \section{Reflection and Insights}
 
