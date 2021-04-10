@@ -68,7 +68,7 @@ They stated that their goal for the first couple of iterations was to research a
 %==============================================================================
 \section{The Application}
 
-Before we can discuss the application, we need to know the bare minimum functionality our customers expected of us. At the start of the first sprint, after our first meeting with the customer, we were given three major tasks, with each of them also getting split into a couple of sub-tasks. They were:
+Before we can discuss the application, we need to know the minimum viable product our customers expected. At the start of the first sprint, after our first meeting with the customer, we gathered the three major tasks, which would result in being the minimum viable product, with each of being split couple of sub-tasks. They were:
 
 Task 1 - Establish a relationship between video and 2d (ground plane) map:
 \begin{itemize}
@@ -88,7 +88,7 @@ Task 3 - Plot features from 3d map onto a video feed:
 	\item Task 3b: Combining Tasks 2b and 3a determine whether the object identified in 3d map is visible to the camera and if not highlight that it is a hidden target.   
 \end{itemize}
 
-Along with this, we had also been asked to have optional functionalities be added if time permits, they also requested to make the application open-source. To fulfill our tasks and carry out the request, we were recommended several APIs and software by our customers. Initially, we settled on CesiumJS and ElectronJS but over halfway through the project’s duration, we switched to ArcGIS + JavaFX due to the limitations of our earlier approach.
+Along with this, we had also been asked to provide additional functionalities if time permits, they also requested to make the application open-source. To fulfill our tasks and carry out the request, we were recommended several APIs and software by our customers. Initially, we settled on CesiumJS and ElectronJS but over halfway through the project’s development lifecycle, we switched to our ArcGIS + JavaFX based application due to the limitations of our earlier approach, now called ThalesArc.
 
 \subsection{ElectronJSApp}
 This application had been made by combining a couple of technologies. The most notable being CesiumJS, which is an open-source JavaScript library for creating static or dynamic 2D and 3D maps,\cite{cesiumJS} it supports for creating multiple maps which we deemed ideal for the intended use. Secondly, the front-end framework we used was Bootstrap, which allows for creating responsive websites, with a grid system, extensive prebuilt components, and powerful JavaScript plugins\cite{Bootstrap}. 
