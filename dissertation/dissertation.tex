@@ -115,9 +115,9 @@ Whilst also completing the minimum viable product we were able to implement a fe
 
 \subsection{Application Comparisons}
 
-Whilst writing down a few key features of the applications mentioned above would be a good enough explanation to an GIS expert, it can also easily confuse someone new to mapping technologies. Hence providing a more detailed explanation and comparison between the applications.
+Whilst writing down a few key features of the applications mentioned above would be a good enough explanation to a GIS expert, it can also easily confuse someone new to mapping technologies. Hence providing a more detailed explanation and comparison between the applications.
 
-To realize our vision for the application it's beneficial to take a look at the wireframes developed within the first sprint of the software development lifecycle, which set out a concrete foundation for what the app would look like. As we can see in Figure 1, the wireframe is split into a few components, the left side is split off to log of all the targets on the map, and a few more options for the user to choose between features and also displaying the current user location. The right side hosts the map which displays the field of view cone with the dead of ground information and users position.
+To realize our vision for the application it's beneficial to take a look at the wireframes developed within the first sprint of the software development lifecycle, which set out a concrete foundation for what the app would look like. As we can see in Figure 1, the wireframe is split into a few components, the left side is split off to log all the targets on the map, and a few more options for the user to choose between features and also displaying the current user location. The right side hosts the map which displays the field of view cone with the dead of ground information and users position.
 
 \begin{figure}[h]
     \caption{Sample wireframe}
@@ -125,9 +125,9 @@ To realize our vision for the application it's beneficial to take a look at the 
     \includegraphics[width=\textwidth]{wireframe.jpg}
 \end{figure}
 
-With the development of the product being split into two applications, starting of with the first , ElectronJSApp. We've provided a 2D map starting off in Glasgow. This application fulfills the customers Task 1, which establishes a relationship between what a sensor can see which then gets plotted onto the 2D map, for example we could spawn randomly generated points on-to the map and a fixed user location. However, a big issue we faced is the points get generated onto a single graphic layer, combined with the map, resulting in computationally expensive graphic processing, which a web browser is not capable of. Especially if we wanted to have the constant stream of data coming in and updating the users current location graphically while doing other processes. 
+With the development of the product being split into two applications, starting with the first, ElectronJSApp. We've provided a 2D map starting in Glasgow. This application fulfils the customer's Task 1, which establishes a relationship between what a sensor can see which then gets plotted onto the 2D map, for example, we could spawn randomly generated points on to the map and a fixed user location. However, a big issue we faced is the points get generated onto a single graphic layer, combined with the map, resulting in computationally expensive graphic processing, which a web browser is not capable of. Especially if we wanted to have the constant stream of data coming in and updating the user's current location graphically while doing other processes. 
 
-This seaways into the second application we've developed as mentioned before which uses the ArcGIS Pro API. This works in a more industry standard procedure for mapping applications, where it uses data layers as a mechanism to display geographical datasets. The sample dataset we've used is located in Brest, France as it's provided by ArcGIS Pro out of the box.
+This segways into the second application we've developed as mentioned before which uses the ArcGIS Pro API. Which works in a more industry-standard fashion for mapping applications, where it uses data layers as a mechanism to display geographical datasets. The sample dataset we've used is located in Brest, France as it's provided by ArcGIS Pro out of the box.
 
 \begin{figure}[h]
     \caption{Example of layers in ArcGIS}
@@ -135,7 +135,7 @@ This seaways into the second application we've developed as mentioned before whi
     \includegraphics[width=\textwidth]{GISLayers.jpg}
 \end{figure}
 
-In figure 2 we can see different layers being are used in the image to display a few map features. Taking a note from this example we've personally used 3 main layers, one for each, the user, the targets and the field of view, with other additional layers for extra features. This allows us to dynamically or statically update each layer on its own hence reducing lag, and allowing us to use GPU resources to render the graphic layers in dynamically in real time. 
+In figure 2 we can see different layers being are used in the image to display a few map features. Taking a note from this example we've personally used 3 main layers, one for each, the user, the targets and the field of view, with other additional layers for extra features. This allows us to dynamically or statically update each layer on its own hence reducing lag, and allowing us to use GPU resources to render the graphic layers in dynamically in real-time. 
 
 \begin{figure}[h]
     \caption{ThalesArc line of sight visibility feature}
@@ -151,9 +151,9 @@ Figure 3 showcases the feature, where we try and process the line of sight from 
     \includegraphics[width=\textwidth]{ElectronJSLOS.jpg}
 \end{figure}
 
-Trying to achieve this functionality in the ElectronJSApp required us to create many points in between the user and map to see weather or not it'd intersect with its surrounding terrain as seen in Figure 4. Whilst doing this process, the application gets resource hungry and start to bog down its overall performance. 
+Trying to achieve this functionality in the ElectronJSApp required us to create many points in between the user and map to see whether or not it'd intersect with its surrounding terrain as seen in Figure 4. Whilst doing this process, the application gets resource hungry and start to bog down its overall performance. 
 
-Other miscellaneous features that have been included are vector representation for targets, this can be abstracted to be used for the users route or be disabled upon the users wish. Users can go back to original user location by clicking the "Update Camera" button, they also have the freedom to create, save and update the log files which are stored in the "LogFiles" directory, for which a sample file has also been provided for demonstration.
+Other miscellaneous features that have been included are vector representation for targets, this can be abstracted to be used for the user's route or be disabled upon the users wish. Users can go back to the original user location by clicking the "Update Camera" button, they also have the freedom to create, save and update the log files which are stored in the "LogFiles" directory, for which a sample file has also been provided for demonstration.
 
 %==============================================================================
 \section{Software Development Process}
