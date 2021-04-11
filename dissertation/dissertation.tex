@@ -7,7 +7,9 @@
 \documentclass{l3proj}
 \usepackage{cite}
 \usepackage{graphicx}
+\usepackage{float}
 \graphicspath{ {./images/} }
+
 
 \begin{document}
 
@@ -26,7 +28,7 @@
 
 \begin{abstract}
 
-This paper presents a case study of the development of a sensor mapping software, proposed by Thales UK. We discuss the proposal, the application made, the software development process and finally our insights and the conclusions drawn from the project as a whole.
+    This paper presents a case study of the development of a sensor mapping software, proposed by Thales UK. We discuss the proposal, the application made, the software development process and finally our insights and the conclusions drawn from the project as a whole.
 
 \end{abstract}
 
@@ -39,25 +41,26 @@ This paper presents a case study of the development of a sensor mapping software
 %==============================================================================
 \section{Introduction}
 
-This paper presents a case study of the development of a sensor mapping software. The application takes data from a LIDAR\cite{lidar} sensor system like the SOPHIE LITE Electrical External ICD device\cite{sophie}. The application takes in the scan data and maps it onto a 3D or a 2D map to visualize the scanned data. Furthermore, the mapping function can simulate the sensor system.
+This paper presents a case study of the development of a sensor mapping software. The application takes data from a sensor system like the SOPHIE LITE Electrical External ICD device \cite{sophie}. The application takes in the scan data and maps it onto a 3D or a 2D map to visualize the scanned data. Furthermore, the mapping function can simulate the sensor system.
 
 The paper begins with some background information about our customer and their proposal (section 2 \& 3). It then delves into details about our main application followed by a thorough recount of the software development process (sections 4 \& 5). 
 
 This is followed by our reflection about the project and key insights gained throughout the six to seven months of development (section 6). We finally conclude it with a brief look at the various software development practices we adopted and how closely our project’s progress was tied to the Professional Software Development course (section 7).
 
+
 %==============================================================================
 \section{Our Customer}
 
-Thales Group\cite{thales} is a French multinational company, founded in December 2000, that designs and builds electrical systems and provides services for the aerospace, defense, transportation, and security markets. The proposal that was given to our team, CS01, by the company’s UK branch. Thales UK\cite{thalesUK} approached the University of Glasgow Computer Science department to task a student development team to build a proof of concept of sensor data visualization and simulation application.
+Thales Group is a French multinational company, founded in December 2000, that designs and builds electrical systems and provides services for the aerospace, defense, transportation, and security markets.\cite{thales} The proposal that was given to our team, CS01, by the company’s UK branch. Thales UK approached the University of Glasgow Computer Science department to task a student development team to build a proof of concept of sensor data visualization and simulation application.
 
-Our customers consisted of Ian James, Iain Carrie, Matt Tucknott, and Christopher Dickson. Ian acted as our main point of contact and sponsor on behalf of Thales. Iain is the Project Technical Lead for Urban Canyon, one of Thales’ many ongoing projects, and was the main beneficiary of our application. Matt is a Thales Technical Expert on GIS (Geographic Information Systems)\cite{gis} and has had over 20 years of experience in the field as well as 29 years of Java and C++. Christopher is a Thales Algorithms Engineer with over 19 years of software experience (Python, C++) and has 10 years of experience with image processing (OpenCV, Matlab).
+Our customers consisted of Ian James, Iain Carrie, Matt Tucknott, and Christopher Dickson. Ian acted as our main point of contact and sponsor on behalf of Thales. Iain is the Project Technical Lead for Urban Canyon, one of Thales’ many ongoing projects, and was the main beneficiary of our application. Matt is a Thales Technical Expert on Geographic Information Systems (GIS)  and has had over 20 years of experience in the field as well as 29 years of Java and C++. Christopher is a Thales Algorithms Engineer with over 19 years of software experience and has 10 years of experience with image processing.
 
 The way our customer’s team was structured was that Ian would be our main liaison. Most of our conversations were with him and he was the first to be informed of any issues or scheduling details for meetings from our end. Iain was the one who approved of or suggested many of our application’s features earlier on during development while Christopher and Matt provided development support. Matt in particular was integral for fixing one of the major roadblocks we faced over halfway through development (more on this later). 
 
 %==============================================================================
 \section{The Project Proposal}
 
-Thales UK was looking for software to support a LIDAR sensor system with mapping information in 2D and 3D with potential real-time information update capability. Their long-term aim was to bring autonomous and manned platforms closer together with the integrated sensor and mapping software they proposed. The proposed project specification first aimed to develop a simple overlay of a target locator sensor on a map and then aimed to extend the integration to be 3D. The client stated that they were not constraining the development team on what technologies to use, however they would prefer that the mapping tool and the sensor suite be integrated to better aid their aim for the software to cope with a wide variety of situations.
+Thales UK was looking for software to support a sensor system with mapping information in 2D and 3D with potential real-time information update capability. Their long-term aim was to bring autonomous and manned platforms closer together with the integrated sensor and mapping software they proposed. The proposed project specification first aimed to develop a simple overlay of a target locator sensor on a map and then aimed to extend the integration to be 3D. The client stated that they were not constraining the development team on what technologies to use, however they would prefer that the mapping tool and the sensor suite be integrated to better aid their aim for the software to cope with a wide variety of situations.
 
 The produced software solution is an open-source MIT licensed prototype, therefore a patent will not be sought. The main purpose and use of the software product are to provide proof of concept. The product will not be deployed into production, only used for demonstration purposes. The goal of the project proposal was to explore the technologies needed to develop such an application, what resources it needs, and to implement a prototype solution.
 
@@ -66,7 +69,7 @@ They stated that their goal for the first couple of iterations was to research a
 %==============================================================================
 \section{The Application}
 
-Before we can discuss the application, we need to know the bare minimum functionality our customers expected of us. At the start of the first sprint, after our first meeting with the customer, we were given three major tasks, with each of them also getting split into a couple of sub-tasks. They were:
+Before we can discuss the application, we need to know the minimum viable product our customers expected. At the start of the first sprint, after our first meeting with the customer, we gathered the three major tasks, which would result in being the minimum viable product, with each of being split couple of sub-tasks. They were:
 
 Task 1 - Establish a relationship between video and 2d (ground plane) map:
 \begin{itemize}
@@ -86,39 +89,71 @@ Task 3 - Plot features from 3d map onto a video feed:
 	\item Task 3b: Combining Tasks 2b and 3a determine whether the object identified in 3d map is visible to the camera and if not highlight that it is a hidden target.   
 \end{itemize}
 
-Along with this, it was also requested to make the application open-source. To fulfill our tasks and carry out the request, we were recommended several APIs and software by our customers. Initially, we settled on CesiumJS and ElectronJS but over halfway through the project’s duration, we switched to ArcGIS + JavaFX due to the limitations of our earlier approach.
+Along with this, we had also been asked to provide additional functionalities if time permits, they also requested to make the application open-source. To fulfill our tasks and carry out the request, we were recommended several APIs and software by our customers. Initially, we settled on CesiumJS and ElectronJS but over halfway through the project’s development lifecycle, we switched to our ArcGIS + JavaFX based application due to the limitations of our earlier approach, now called ThalesArc.
 
 \subsection{ElectronJSApp}
+This application had been made by combining a couple of technologies. The most notable being CesiumJS, which is an open-source JavaScript library for creating static or dynamic 2D and 3D maps,\cite{cesium} it supports for creating multiple maps which we deemed ideal for the intended use. Secondly, the front-end framework we used was Bootstrap, which allows for creating responsive websites, with a grid system, extensive prebuilt components, and powerful JavaScript plugins\cite{Bootstrap}. 
 
-CesiumJS\cite{cesium} is an open-source JavaScript library for creating static or dynamic 2D and 3D maps. It supports multiple platforms and was perfect for our intended use. We used ElectronJS\cite{electron}, an open-source software framework based on Chromium, to create our application and ran the two in tandem on NodeJS\cite{node} which is an open-source JavaScript runtime environment.
+Both these technologies are combined and packaged under ElectronJS an open-source software framework based on Chromium, which runs under the open-source JavaScript server runtime environment called Node.js\cite{Node.js}. 
 
-This application is meant to be versatile, as Cesium can provide most of the data sets for 2D and 3D map features, we'd require. On top of this, the people at Cesium regularly update the extensive documentation with a sandbox feature to showcase their predominant features and how they can be integrated into a web-based application. A python script was first used to simulate sensor data and plot points on the map, but this was later scrapped in favour of an Android application we developed which could send actual geographical data gathered from a phone’s GPS to the application by utilising WebSockets.
+This application is versatile, as Cesium can provide most of the data sets for 2D and 3D map features, we'd require. On top of this, the people at Cesium regularly update the extensive documentation with a sandbox feature to showcase their predominant features and how they can be integrated into a web-based application. A python script was first used to simulate sensor data and plot points on the map, but this was later scrapped in favour of an Android application we developed which could send actual geographical data gathered from a phone’s GPS to the application by utilising Web Sockets, this makes it possible to communicate between the application and user.
 
 Cesium is a great API for displaying geospatial information within a web browser, making it lightweight, and easy to distribute on a massive scale, meaning it'd be great for displaying static data which does not change a lot, however, one of its major drawbacks is not being able to utilize the GPU on a computer, which would be the main platform for our application to be run on, this meant that having a constantly updating data stream would bog down the performance of the application, hence not being satisfactory enough for our vision of the product.
 
-On top of the above-mentioned issues, we were also unable to project visibility rays within the 3D world hence not knowing where our targets would be located as they would be rendered in without having geospatial information attached to it. One of the solutions that'd allow us to overcome this roadblock would be to purchase the Cesium Ion SDK licence\cite{ion}, therefore making it proprietary software and being over-budget.
+On top of the above-mentioned issues, we were also unable to project visibility rays within the 3D world hence not knowing where our targets would be located as they would be rendered in without having geospatial information attached to it. One of the solutions that'd allow us to overcome this roadblock would be to purchase the Cesium ion SDK licence, therefore making it proprietary software and being over-budget.
 
-These issues, combined with the application not deploying on anything but Windows and not being able to have unit tests, meant that we had reached the end of the road with Cesium and had to find a new approach to our project.
-
-\includegraphics[width=\textwidth]{ElectronJSApp2}
-
+These issues, combined with the application not deploying on anything but Windows, meant that we had reached the end of the road with Cesium and had to find a new approach to our project.
 
 \subsection{ThalesArc}
 
-ArcGIS Pro\cite{arcgis} was our answer to Cesium’s shortcomings. This is a geographic information system software developed by the Environmental Systems Research Institute (Esri)\cite{esri} which supports an API based on a 64-bit architecture and combines support for 2D and 3D applications, used for geospatial processing programs. Making it a great contender to the previously maintained ElectronJSApp application. ArcGIS Pro was integrated onto the JavaFX\cite{javaFX} client application platform supporting cross-platform development and releases.
+ArcGIS Pro was our answer to Cesium’s shortcomings. This is a geographic information system software developed by the Environmental Systems Research Institute (Esri) which supports an API based on a 64-bit architecture and combines support for 2D and 3D applications, used for geospatial processing programs. Making it a great contender to the previously maintained ElectronJSApp application. ArcGIS Pro was integrated onto the JavaFX client application platform supporting cross-platform development and releases.
 
 The new application was everything we had hoped to achieve but failed to with the ElectronJSApp. This new API allowed us to project the field-of-view rays from the camera, whilst utilising the GPUs capabilities, hence allowing us to move the field-of-view cone around on the map just like a senor would be based on the geographic coordinate system.
 
-Like before, a python script had now been modified to allow for sending JSON packets to the application which then converted them to sensor objects, allowing us to have simulated data streams for plotting new user coordinates and target coordinates if given. However, due to time constraints, we were unable to further develop the Android simulator application to support the new ThalesArc app.
+Like before, a python script had now been modified to allow for sending JSON packets to the application which then converted them to Sensor objects, allowing us to have simulated data streams for plotting new user coordinates and target coordinates if given. However, due to time constraints, we were unable to further develop the Android simulator application to support the new ThalesArc app.
 
 Whilst also completing the minimum viable product we were able to implement a few extra features which the customer had mentioned within their product requirements draft. This included adding a detailed log of all the targets being shown to the user, functionality of loading, creating, and saving these logs within the user's directory, and also additional features which can be further developed if wished by the customer, such as having target paths, which can be abstracted to also display the users routing.
 
-Unit testing this time around had worked with the non-visual components and covered a few test cases on functions which we'd hope to return specific values regardless of the number of times they'd be used.
+\subsection{Application Comparisons}
 
-After talking to the customer about how they'd wish to use the application we develop and discussing it internally with the team, we decided to use the MIT license\cite{mit} which grants permissions and indemnify developers for future use. Specifically, it grants any person who obtains a copy of the software and associated files the right to use, copy, modify, merge, distribute, publish, sublicense, and sell copies of the software.
+Whilst writing down a few key features of the applications mentioned above would be a good enough explanation to a GIS expert, it can also easily confuse someone new to mapping technologies. Hence providing a more detailed explanation and comparison between the applications.
 
-\includegraphics[width=\textwidth]{ThalesARC2}
+To realize our vision for the application it's beneficial to take a look at the wireframes developed within the first sprint of the software development lifecycle, which set out a concrete foundation for what the app would look like. As we can see in Figure 1, the wireframe is split into a few components, the left side is split off to log all the targets on the map, and a few more options for the user to choose between features and also displaying the current user location. The right side hosts the map which displays the field of view cone with the dead of ground information and users position.
 
+\begin{figure}[!h]
+    \caption{Sample wireframe}
+    \centering
+    \includegraphics[width=\textwidth]{wireframe.jpg}
+\end{figure}
+
+With the development of the product being split into two applications, starting with the first, ElectronJSApp. We've provided a 2D map starting in Glasgow. This application fulfils the customer's Task 1, which establishes a relationship between what a sensor can see which then gets plotted onto the 2D map, for example, we could spawn randomly generated points on to the map and a fixed user location. However, a big issue we faced is the points get generated onto a single graphic layer, combined with the map, resulting in computationally expensive graphic processing, which a web browser is not capable of. Especially if we wanted to have the constant stream of data coming in and updating the user's current location graphically while doing other processes. 
+
+This segways into the second application we've developed as mentioned before which uses the ArcGIS Pro API. Which works in a more industry-standard fashion for mapping applications, where it uses data layers as a mechanism to display geographical datasets. The sample dataset we've used is located in Brest, France as it's provided by ArcGIS Pro out of the box.
+
+\begin{figure}[!h]
+    \caption{Example of layers in ArcGIS}
+    \centering
+    \includegraphics[width=\textwidth]{GISLayers.jpg}
+\end{figure}
+
+In figure 2 we can see different layers being are used in the image to display a few map features. Taking a note from this example we've personally used 3 main layers, one for each, the user, the targets and the field of view, with other additional layers for extra features. This allows us to dynamically or statically update each layer on its own hence reducing lag, and allowing us to use GPU resources to render the graphic layers in dynamically in real-time. 
+
+\begin{figure}[H]
+    \caption{ThalesArc line of sight visibility feature}
+    \centering
+    \includegraphics[width=\textwidth]{ArcGISLOS.jpg}
+\end{figure}
+
+Figure 3 showcases the feature, where we try and process the line of sight from a user to a target, which works by highlighting the line green if the point can be seen from the user and red if not.
+
+\begin{figure}[H]
+    \caption{ElectronJSApp line of sight visibility feature}
+    \includegraphics[width=\textwidth]{ElectronJSLOS.jpg}
+\end{figure}
+
+Trying to achieve this functionality in the ElectronJSApp required us to create many points in between the user and map to see whether or not it'd intersect with its surrounding terrain as seen in Figure 4. Whilst doing this process, the application gets resource hungry and start to bog down its overall performance. 
+
+Other miscellaneous features that have been included are vector representation for targets, this can be abstracted to be used for the user's route or be disabled upon the users wish. Users can go back to the original user location by clicking the "Update Camera" button, they also have the freedom to create, save and update the log files which are stored in the "LogFiles" directory, for which a sample file has also been provided for demonstration.
 
 %==============================================================================
 \section{Software Development Process}
@@ -135,7 +170,7 @@ The basis for our team’s software development is the Agile\cite{agile} approac
  
 At the end of a sprint, there was an evaluation of the work that had been done, a code review\cite{coder}, and a retrospective\cite{retro} to reflect on the sprint and the performance of the team members as well as determining if the goals of the sprint had been met. During the retrospective, the team listed the good, the bad, and the ok elements of the sprint and discussed ways of improving the departments in which we were lacking. The retrospectives were a crucial part of the team dynamic and in keeping the team on track to achieve the main goal of the project: the delivery of the software product while assuring quality.
 
-Before any of this could happen, however, we needed to split the workload amongst ourselves. For this, we used assigned each member's roles either specified in Scrum or made arbitrarily by ourselves. Krishang and Krasimir assumed the roles of lead developers and UX designers. The two of them contributed a great deal to both the front and back end of the software, with Krishang going the extra mile by implementing unit tests and getting our CI/CD pipelines working. Vrinda was also a developer and made a companion Android application by herself while also acting as a quality assurance manager. Shayam took up the role of toolsmith and worked on this dissertation with Shahzeb who also acted as the product owner. Atbaan recorded all the meetings we had with the customer, took notes, and maintained our wiki. While the members of the team had equal standing, for the most part, Krishang also took on the responsibility of Scrum Master\cite{scrumM} to keep everything well organised.
+Before any of this could happen, however, we needed to split the workload amongst ourselves. For this, we used assigned each member's roles either specified in Scrum or made arbitrarily by ourselves. Krishang and Krasimir assumed the roles of lead developers and UX designers. The two of them contributed a great deal to both the front and back end of the software, with Krishang going the extra mile by implementing unit tests and getting our CI/CD pipelines working. Vrinda was also a developer and made a companion Android application by herself while also acting as a quality assurance manager. Shayam took up the role of toolsmith and worked on this dissertation with Shahzeb who also acted as the product owner. Atbaan recorded all the meetings we had with the customer, took notes, and maintained our wiki. While the members of the team had equal standing, for the most part, Krishang also took on the responsibility of Scrum Master\cite{ScrumMaster} to keep everything well organised.
 
 \subsection{The Development Phase}
 
@@ -151,11 +186,11 @@ The only way to fix our problem was to scrap our existing application and create
 
 \subsection{Quality Assurance And Project Management}
  
-While successfully creating a working application is good and all, we also had to take care of the quality. The method that was used to ensure the consistent quality of the software and to root out bugs was testing. We tested our application in two ways: the traditional manual way, user testing; and an automated, robust method known as Unit testing\cite{unit}. The implemented tests had decent software coverage, though Unit testing was not used for UI testing\cite{uitest}, which was instead done manually by the team's testers.
+While successfully creating a working application is good and all, we also had to take care of the quality. The method that was used to ensure the consistent quality of the software and to root out bugs was testing. We tested our application in two ways: the traditional manual way, user testing; and an automated, robust method known as Unit testing \cite{unit}. The implemented tests had decent software coverage, though Unit testing was not used for UI testing \cite{uitest}, which was instead done manually by the team's testers.
 
-Gitlab runners\cite{runner} were used to implement Unit testing for both the core applications and the CI/CD pipelines\cite{pipe}. The tests were run as jobs on a UNIX machine. The development team planned on having Unit test jobs running across the entire application. However, due to unforeseen hurdles during the development, test runners could not be set up for the display drivers. This meant the team could not set up pipelines successfully for the ElectronJSApp but we were successful in creating the ThalesArc application pipeline.
+Gitlab runners \cite{runner} were used to implement Unit testing for both the core applications and the CI/CD pipelines \cite{pipe}. The tests were run as jobs on a UNIX machine. The development team planned on having Unit test jobs running across the entire application. However, due to unforeseen hurdles during the development, test runners could not be set up for the display drivers. This meant the team could not set up pipelines successfully for the ElectronJSApp but we were successful in creating the ThalesArc application pipeline.
 
-It needs to be noted that everything achieved this far – the planning, the development, and the testing for quality – could not have been done without some system of management\cite{manage}. As mentioned earlier, there was not a single time when the team were physically gathered together. Not only that, not all of us were in the UK. We had to work around multiple timezones with many of our members facing internet issues. We made good use of MS Teams to communicate and arranged plenty of inter-team meetings to discuss the project and even have casual talks to keep up morale.
+It needs to be noted that everything achieved this far – the planning, the development, and the testing for quality – could not have been done without some system of management \cite{management}. As mentioned earlier, there was not a single time when the team were physically gathered together. Not only that, not all of us were in the UK. We had to work around multiple timezones with many of our members facing internet issues. We made good use of MS Teams to communicate and arranged plenty of inter-team meetings to discuss the project and even have casual talks to keep up morale.
 
 If a team member was busy or sick, they made sure to promptly let the rest of the team know so that someone could take over for them. Tasks were discussed among the team and everyone was free, even encouraged rather, to work on what they were comfortable with. Testers were rotated on a regular basis to catch more bugs. Communication with the customers was also kept up. There was a regular exchange of emails and a couple of meetings were also scheduled for a more thorough, non-time constraint discussion unlike during the customer meetings.
 
@@ -164,7 +199,6 @@ If a team member was busy or sick, they made sure to promptly let the rest of th
 The project was concluded with a final presentation. Normally, during our customer meetings, the developers and the product owner were the ones who spoke. Here though, every member of the team got a chance to speak before a live audience. Shahzeb opened up with an introduction to the team and the customers; Vrinda discussed the motivation for the project, followed up by an explanation of the minimum viable product. Krishang explained the underlying technologies used and both he and Krasimir demoed the final product. We concluded with a few closing remarks read out by Shahzeb which was followed up by a QnA session with the marker, the customers, and the audience.
 
 The presentation went great. Our customers from Thales UK were happy with the final product and greatly impressed by our effort to make a comeback from what seemed to be a colossal pitfall – a sentiment which our peers watching shared as well. Alongside this was a formal handover of the application to the customers via a release branch on Gitlab. Instructions on how to access said branch, download the software package, and set up the applications (ElectronJSApp and ThalesArc) were shared with them and the software was fully handed over, with the team not taking responsibility for further development and maintenance.
-
 
 %==============================================================================
 \section{Reflection and Insights}
@@ -190,7 +224,7 @@ Krishang: The project helped me take a look into what software engineering pract
 
 The duration of the team project was quite long, with it spanning two whole semesters. During this time many of us were not in our comfort zone by working remotely and team dynamics took a while to establish. But as our team has stated in Section 6, we learned a lot from our time working together and feel that it’s been a great experience all things considered.
 
-The project was tied closely to the Professional Software Development course\cite{psd}. Many of the practices we adopted were first introduced during the course. We were unfamiliar with the new information and terminology at first and took a while to wrap our heads around it during the initial sprints but it wasn’t long before we grasped everything and started working in earnest as it is done in the industry.
+The project was tied closely to the Professional Software Development course \cite{psd}. Many of the practices we adopted were first introduced during the course. We were unfamiliar with the new information and terminology at first and took a while to wrap our heads around it during the initial sprints but it wasn’t long before we grasped everything and started working in earnest as it is done in the industry.
 
 Agile software development with Scrum was our bread and butter. Our workload was divided into short sprints and amongst the team members. We had continuous testing and we adapted to various upsets and modified our approach – thereby not stubbornly sticking to an ill-conceived plan. We held retrospectives to see where we stood and get everyone on the same page and made good use of branching to manage our Gitlab repository.
 
@@ -201,9 +235,6 @@ The mistakes we made and tribulations we went through gave us a deeper understan
 We are thankful for the guidance provided by our coach Raghad Abdul Rab; our markers Paul Siebert and Jesus Rodriguez Perez; and our PSD lecturer Tim Storer. We also appreciate our customers from Thales UK for being great sports by treating us as equals and not looking down on us for being “students”.
 
 \newpage
-
-\section{References}
-
 
 %==============================================================================
 \bibliographystyle{plain}
