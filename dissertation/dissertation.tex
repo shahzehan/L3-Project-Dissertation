@@ -123,7 +123,7 @@ To realize our vision for the application it's beneficial to take a look at the 
 \begin{figure}[!h]
     \caption{Sample wireframe}
     \centering
-    \includegraphics[width=\textwidth]{wireframe.jpg}
+    \includegraphics[width=0.7\textwidth]{wireframe.jpg}
 \end{figure}
 
 With the development of the product being split into two applications, starting with the first, ElectronJSApp. We've provided a 2D map starting in Glasgow. This application fulfils the customer's Task 1, which establishes a relationship between what a sensor can see which then gets plotted onto the 2D map, for example, we could spawn randomly generated points on to the map and a fixed user location. However, a big issue we faced is the points get generated onto a single graphic layer, combined with the map, resulting in computationally expensive graphic processing, which a web browser is not capable of. Especially if we wanted to have the constant stream of data coming in and updating the user's current location graphically while doing other processes. 
