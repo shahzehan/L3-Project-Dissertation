@@ -1,0 +1,152 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./dissertation.tex
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-02-18> (./l3proj.cls
+Document Class: l3proj 2009/01/09 Colin Perkins <csp@dcs.gla.ac.uk>.2009/09/16 
+Modified by Tim Storer <tws@dcs.gla.ac.uk> to support non pdf modes.2011/02/23 
+Modified by Jeremy.Singer@glasgow.ac.uk to use hyperref.
+(c:/texlive/2020/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
+(c:/texlive/2020/texmf-dist/tex/latex/base/size11.clo))
+(c:/texlive/2020/texmf-dist/tex/generic/iftex/ifpdf.sty
+(c:/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty))
+(c:/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
+(c:/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty)
+(c:/texlive/2020/texmf-dist/tex/latex/graphics/graphics.sty
+(c:/texlive/2020/texmf-dist/tex/latex/graphics/trig.sty)
+(c:/texlive/2020/texmf-dist/tex/latex/graphics-cfg/graphics.cfg)
+(c:/texlive/2020/texmf-dist/tex/latex/graphics-def/pdftex.def)))
+(c:/texlive/2020/texmf-dist/tex/latex/hyperref/hyperref.sty
+(c:/texlive/2020/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty)
+(c:/texlive/2020/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+(c:/texlive/2020/texmf-dist/tex/generic/infwarerr/infwarerr.sty))
+(c:/texlive/2020/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty)
+(c:/texlive/2020/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty)
+(c:/texlive/2020/texmf-dist/tex/generic/pdfescape/pdfescape.sty)
+(c:/texlive/2020/texmf-dist/tex/latex/hycolor/hycolor.sty)
+(c:/texlive/2020/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty)
+(c:/texlive/2020/texmf-dist/tex/latex/auxhook/auxhook.sty)
+(c:/texlive/2020/texmf-dist/tex/latex/kvoptions/kvoptions.sty)
+(c:/texlive/2020/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(c:/texlive/2020/texmf-dist/tex/latex/hyperref/hyperref-langpatches.def)
+(c:/texlive/2020/texmf-dist/tex/generic/intcalc/intcalc.sty)
+(c:/texlive/2020/texmf-dist/tex/generic/etexcmds/etexcmds.sty)
+(c:/texlive/2020/texmf-dist/tex/latex/hyperref/puenc.def)
+(c:/texlive/2020/texmf-dist/tex/latex/url/url.sty)
+(c:/texlive/2020/texmf-dist/tex/generic/bitset/bitset.sty
+(c:/texlive/2020/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty))
+(c:/texlive/2020/texmf-dist/tex/latex/base/atbegshi-ltx.sty))
+(c:/texlive/2020/texmf-dist/tex/latex/hyperref/hpdftex.def
+(c:/texlive/2020/texmf-dist/tex/latex/base/atveryend-ltx.sty)
+(c:/texlive/2020/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+(c:/texlive/2020/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty))))
+(c:/texlive/2020/texmf-dist/tex/latex/cite/cite.sty)
+(c:/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)
+(./dissertation.aux)
+(c:/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (c:/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+(c:/texlive/2020/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg))
+(c:/texlive/2020/texmf-dist/tex/latex/graphics/color.sty
+(c:/texlive/2020/texmf-dist/tex/latex/graphics-cfg/color.cfg))
+(c:/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
+(c:/texlive/2020/texmf-dist/tex/latex/refcount/refcount.sty)
+(c:/texlive/2020/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty))
+(./dissertation.out) (./dissertation.out) [1{c:/texlive/2020/texmf-var/fonts/ma
+p/pdftex/updmap/pdftex.map} <./images/CompSci_mono.pdf>]
+
+LaTeX Warning: Citation `lidar' on page 2 undefined on input line 42.
+
+
+LaTeX Warning: Citation `sophie' on page 2 undefined on input line 42.
+
+
+LaTeX Warning: Citation `thales' on page 2 undefined on input line 51.
+
+
+LaTeX Warning: Citation `thalesUK' on page 2 undefined on input line 51.
+
+
+LaTeX Warning: Citation `gis' on page 2 undefined on input line 53.
+
+[2] [3]
+
+LaTeX Warning: Citation `cesium' on page 4 undefined on input line 93.
+
+
+LaTeX Warning: Citation `electron' on page 4 undefined on input line 93.
+
+
+LaTeX Warning: Citation `node' on page 4 undefined on input line 93.
+
+[4]
+
+LaTeX Warning: Citation `ion' on page 5 undefined on input line 99.
+
+
+LaTeX Warning: Citation `arcgis' on page 5 undefined on input line 108.
+
+
+LaTeX Warning: Citation `esri' on page 5 undefined on input line 108.
+
+
+LaTeX Warning: Citation `javaFX' on page 5 undefined on input line 108.
+
+[5 <./images//ElectronJSApp2.png>]
+
+LaTeX Warning: Citation `mit' on page 6 undefined on input line 118.
+
+[6 <./images//ThalesARC2.png>]
+
+LaTeX Warning: Citation `agile' on page 7 undefined on input line 134.
+
+
+LaTeX Warning: Citation `scrum' on page 7 undefined on input line 134.
+
+
+LaTeX Warning: Citation `coder' on page 7 undefined on input line 136.
+
+
+LaTeX Warning: Citation `retro' on page 7 undefined on input line 136.
+
+
+LaTeX Warning: Citation `scrumM' on page 7 undefined on input line 138.
+
+[7] [8]
+
+LaTeX Warning: Citation `unit' on page 9 undefined on input line 154.
+
+
+LaTeX Warning: Citation `uitest' on page 9 undefined on input line 154.
+
+
+LaTeX Warning: Citation `runner' on page 9 undefined on input line 156.
+
+
+LaTeX Warning: Citation `pipe' on page 9 undefined on input line 156.
+
+
+LaTeX Warning: Citation `manage' on page 9 undefined on input line 158.
+
+[9] [10]
+Overfull \hbox (1.10468pt too wide) in paragraph at lines 191--192
+\OT1/cmr/m/n/12 The du-ra-tion of the team project was quite long, with it span
+-ning two whole semesters.
+
+LaTeX Warning: Citation `psd' on page 11 undefined on input line 193.
+
+[11] (./dissertation.bbl) [12] (./dissertation.aux)
+
+LaTeX Warning: There were undefined references.
+
+ )
+(see the transcript file for additional information){c:/texlive/2020/texmf-dist
+/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<c:/texlive/2020/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.
+pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on dissertation.pdf (12 pages, 849054 bytes).
+Transcript written on dissertation.log.

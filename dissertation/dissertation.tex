@@ -5,6 +5,7 @@
 % Modified 
 
 \documentclass{l3proj}
+\usepackage{cite}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 
@@ -25,8 +26,7 @@
 
 \begin{abstract}
 
-This paper presents a case study of the development of a sensor mapping software.   
-<Add more here.>
+This paper presents a case study of the development of a sensor mapping software, proposed by Thales UK. We discuss the proposal, the application made, the software development process and finally our insights and the conclusions drawn from the project as a whole.
 
 \end{abstract}
 
@@ -39,7 +39,7 @@ This paper presents a case study of the development of a sensor mapping software
 %==============================================================================
 \section{Introduction}
 
-This paper presents a case study of the development of a sensor mapping software. The application takes data from a LIDAR sensor system like the SOPHIE LITE Electrical External ICD device. The application takes in the scan data and maps it onto a 3D or a 2D map to visualize the scanned data. Furthermore, the mapping function can simulate the sensor system.
+This paper presents a case study of the development of a sensor mapping software. The application takes data from a LIDAR\cite{lidar} sensor system like the SOPHIE LITE Electrical External ICD device\cite{sophie}. The application takes in the scan data and maps it onto a 3D or a 2D map to visualize the scanned data. Furthermore, the mapping function can simulate the sensor system.
 
 The paper begins with some background information about our customer and their proposal (section 2 \& 3). It then delves into details about our main application followed by a thorough recount of the software development process (sections 4 \& 5). 
 
@@ -48,9 +48,9 @@ This is followed by our reflection about the project and key insights gained thr
 %==============================================================================
 \section{Our Customer}
 
-Thales Group is a French multinational company, founded in December 2000, that designs and builds electrical systems and provides services for the aerospace, defense, transportation, and security markets. The proposal that was given to our team, CS01, by the company’s UK branch. Thales UK approached the University of Glasgow Computer Science department to task a student development team to build a proof of concept of sensor data visualization and simulation application.
+Thales Group\cite{thales} is a French multinational company, founded in December 2000, that designs and builds electrical systems and provides services for the aerospace, defense, transportation, and security markets. The proposal that was given to our team, CS01, by the company’s UK branch. Thales UK\cite{thalesUK} approached the University of Glasgow Computer Science department to task a student development team to build a proof of concept of sensor data visualization and simulation application.
 
-Our customers consisted of Ian James, Iain Carrie, Matt Tucknott, and Christopher Dickson. Ian acted as our main point of contact and sponsor on behalf of Thales. Iain is the Project Technical Lead for Urban Canyon, one of Thales’ many ongoing projects, and was the main beneficiary of our application. Matt is a Thales Technical Expert on GIS (Geographic Information Systems) and has had over 20 years of experience in the field as well as 29 years of Java and C++. Christopher is a Thales Algorithms Engineer with over 19 years of software experience (Python, C++) and has 10 years of experience with image processing (OpenCV, Matlab).
+Our customers consisted of Ian James, Iain Carrie, Matt Tucknott, and Christopher Dickson. Ian acted as our main point of contact and sponsor on behalf of Thales. Iain is the Project Technical Lead for Urban Canyon, one of Thales’ many ongoing projects, and was the main beneficiary of our application. Matt is a Thales Technical Expert on GIS (Geographic Information Systems)\cite{gis} and has had over 20 years of experience in the field as well as 29 years of Java and C++. Christopher is a Thales Algorithms Engineer with over 19 years of software experience (Python, C++) and has 10 years of experience with image processing (OpenCV, Matlab).
 
 The way our customer’s team was structured was that Ian would be our main liaison. Most of our conversations were with him and he was the first to be informed of any issues or scheduling details for meetings from our end. Iain was the one who approved of or suggested many of our application’s features earlier on during development while Christopher and Matt provided development support. Matt in particular was integral for fixing one of the major roadblocks we faced over halfway through development (more on this later). 
 
@@ -90,13 +90,13 @@ Along with this, it was also requested to make the application open-source. To f
 
 \subsection{ElectronJSApp}
 
-CesiumJS is an open-source JavaScript library for creating static or dynamic 2Dand 3D maps. It supports multiple platforms and was perfect for our intended use. We used ElectronJS, an open-source software framework based on Chromium, to create our application and ran the two in tandem on NodeJS which is an open-source JavaScript runtime environment.
+CesiumJS\cite{cesium} is an open-source JavaScript library for creating static or dynamic 2D and 3D maps. It supports multiple platforms and was perfect for our intended use. We used ElectronJS\cite{electron}, an open-source software framework based on Chromium, to create our application and ran the two in tandem on NodeJS\cite{node} which is an open-source JavaScript runtime environment.
 
 This application is meant to be versatile, as Cesium can provide most of the data sets for 2D and 3D map features, we'd require. On top of this, the people at Cesium regularly update the extensive documentation with a sandbox feature to showcase their predominant features and how they can be integrated into a web-based application. A python script was first used to simulate sensor data and plot points on the map, but this was later scrapped in favour of an Android application we developed which could send actual geographical data gathered from a phone’s GPS to the application by utilising WebSockets.
 
 Cesium is a great API for displaying geospatial information within a web browser, making it lightweight, and easy to distribute on a massive scale, meaning it'd be great for displaying static data which does not change a lot, however, one of its major drawbacks is not being able to utilize the GPU on a computer, which would be the main platform for our application to be run on, this meant that having a constantly updating data stream would bog down the performance of the application, hence not being satisfactory enough for our vision of the product.
 
-On top of the above-mentioned issues, we were also unable to project visibility rays within the 3D world hence not knowing where our targets would be located as they would be rendered in without having geospatial information attached to it. One of the solutions that'd allow us to overcome this roadblock would be to purchase the Cesium ion SDK licence, therefore making it proprietary software and being over-budget.
+On top of the above-mentioned issues, we were also unable to project visibility rays within the 3D world hence not knowing where our targets would be located as they would be rendered in without having geospatial information attached to it. One of the solutions that'd allow us to overcome this roadblock would be to purchase the Cesium Ion SDK licence\cite{ion}, therefore making it proprietary software and being over-budget.
 
 These issues, combined with the application not deploying on anything but Windows and not being able to have unit tests, meant that we had reached the end of the road with Cesium and had to find a new approach to our project.
 
@@ -105,23 +105,65 @@ These issues, combined with the application not deploying on anything but Window
 
 \subsection{ThalesArc}
 
-ArcGIS Pro was our answer to Cesium’s shortcomings. This is a geographic information system software developed by the Environmental Systems Research Institute (Esri) which supports an API based on a 64-bit architecture and combines support for 2D and 3D applications, used for geospatial processing programs. Making it a great contender to the previously maintained ElectronJSApp application. ArcGIS Pro was integrated onto the JavaFX client application platform supporting cross-platform development and releases.
+ArcGIS Pro\cite{arcgis} was our answer to Cesium’s shortcomings. This is a geographic information system software developed by the Environmental Systems Research Institute (Esri)\cite{esri} which supports an API based on a 64-bit architecture and combines support for 2D and 3D applications, used for geospatial processing programs. Making it a great contender to the previously maintained ElectronJSApp application. ArcGIS Pro was integrated onto the JavaFX\cite{javaFX} client application platform supporting cross-platform development and releases.
 
 The new application was everything we had hoped to achieve but failed to with the ElectronJSApp. This new API allowed us to project the field-of-view rays from the camera, whilst utilising the GPUs capabilities, hence allowing us to move the field-of-view cone around on the map just like a senor would be based on the geographic coordinate system.
 
-Like before, a python script had now been modified to allow for sending JSON packets to the application which then converted them to Sensor objects, allowing us to have simulated data streams for plotting new user coordinates and target coordinates if given. However, due to time constraints, we were unable to further develop the Android simulator application to support the new ThalesArc app.
+Like before, a python script had now been modified to allow for sending JSON packets to the application which then converted them to sensor objects, allowing us to have simulated data streams for plotting new user coordinates and target coordinates if given. However, due to time constraints, we were unable to further develop the Android simulator application to support the new ThalesArc app.
 
 Whilst also completing the minimum viable product we were able to implement a few extra features which the customer had mentioned within their product requirements draft. This included adding a detailed log of all the targets being shown to the user, functionality of loading, creating, and saving these logs within the user's directory, and also additional features which can be further developed if wished by the customer, such as having target paths, which can be abstracted to also display the users routing.
 
 Unit testing this time around had worked with the non-visual components and covered a few test cases on functions which we'd hope to return specific values regardless of the number of times they'd be used.
 
-After talking to the customer about how they'd wish to use the application we develop and discussing it internally with the team, we decided to use the MIT license which grants permissions and indemnify developers for future use. Specifically, it grants any person who obtains a copy of the software and associated files the right to use, copy, modify, merge, distribute, publish, sublicense, and sell copies of the software.
+After talking to the customer about how they'd wish to use the application we develop and discussing it internally with the team, we decided to use the MIT license\cite{mit} which grants permissions and indemnify developers for future use. Specifically, it grants any person who obtains a copy of the software and associated files the right to use, copy, modify, merge, distribute, publish, sublicense, and sell copies of the software.
 
 \includegraphics[width=\textwidth]{ThalesARC2}
 
 
 %==============================================================================
 \section{Software Development Process}
+
+The development process the team used can be broken down into 4 sections. First, understanding the requirements given and formulating an action plan. Second, implementing the action plan, which was the development phase, that continued in parallel with the third phase which was testing the developed product. The fourth, and final phase, was the delivery of the produced software to the client.
+
+\subsection{Understanding The Requirements And Forming A Plan}
+
+As detailed in the Project Proposal section, a requirement was given to the development team by Thales UK, outlining a supporting software for a sensor system. The requirement stated that the purpose of the application was to be a demo which, if up to their standards, would then be used as a reference for a new product of their own for commercial purposes. In short, it is a proof of concept. The development team kept this in focus throughout the planning and execution of the project. Furthermore, it is worth noting that the team and the customer agreed that the produced software package will be open source. The licence to be used was left to our discretion so we settled for the MIT open-source licence, as stated already in earlier sections, which was attached to the final product by the handover date. 
+  
+The implementation of the software product started with choosing a technology to work with, that was capable of supporting the proposed requirements and functionalities. Initially, this was the CesiumJS API and ElectronJS for creating the application (more details in Sections 4.1). Once the technology and the framework were chosen the development team proceeded to implement the requirements (i.e the tasks from Section 4) in a procedural order.
+
+The basis for our team’s software development is the Agile\cite{agile} approach with Scrum\cite{scrum}. The entirety of the software development cycle was broken down into 5 sprints. A mandatory meeting with our customers was held before the start of each sprint. In each meeting, we discussed our progress, informed the customer of any current issues, and stated our goals and priorities for the following sprint. We also took any questions they had, answering them to the best of our ability, and showcased a live demonstration of the application(s) whenever we made a significant breakthrough.
+ 
+At the end of a sprint, there was an evaluation of the work that had been done, a code review\cite{coder}, and a retrospective\cite{retro} to reflect on the sprint and the performance of the team members as well as determining if the goals of the sprint had been met. During the retrospective, the team listed the good, the bad, and the ok elements of the sprint and discussed ways of improving the departments in which we were lacking. The retrospectives were a crucial part of the team dynamic and in keeping the team on track to achieve the main goal of the project: the delivery of the software product while assuring quality.
+
+Before any of this could happen, however, we needed to split the workload amongst ourselves. For this, we used assigned each member's roles either specified in Scrum or made arbitrarily by ourselves. Krishang and Krasimir assumed the roles of lead developers and UX designers. The two of them contributed a great deal to both the front and back end of the software, with Krishang going the extra mile by implementing unit tests and getting our CI/CD pipelines working. Vrinda was also a developer and made a companion Android application by herself while also acting as a quality assurance manager. Shayam took up the role of toolsmith and worked on this dissertation with Shahzeb who also acted as the product owner. Atbaan recorded all the meetings we had with the customer, took notes, and maintained our wiki. While the members of the team had equal standing, for the most part, Krishang also took on the responsibility of Scrum Master\cite{scrumM} to keep everything well organised.
+
+\subsection{The Development Phase}
+
+Progress in the first couple of sprints was smooth. We got a handle on CesiumJS and were very successful in completing around half of the tasks assigned to us. There was constant communication between the team members and while initially, our pace was rather slow – understandably since all of us were quite new to a collaborative assignment such as this, and the lack of an actual, physical gathering due to COVID-19 didn’t help – we eventually got a hang of things and kept up with our schedule. The representatives from Thales UK liked what we were doing and for the sake of quality and efficiency, we also kept a steady line of communication with our sister team, CS22, to exchange ideas and troubleshoot any issues either of the teams may have.
+
+However, our progress came to a screeching halt when the development reached task 2b. Due to Cesium’s limitations (see Section 4.1) we could not move any further and ended up wasting almost two whole sprints in trying to rectify our issues. Instead of working on the main application, most of the team was relegated to looking up possible solutions. Vrinda continued working on the Android application so that we had something to show to our customers.
+
+Many avenues and resources were searched for scoured through in our quest to find a viable solution. The documentation for Cesium was extensively gone over and websites like Stack Overflow were frequently visited in hope of finding similar issues and their fixes. We also consulted team CS22 but their way of approaching our customer’s requirements was different from our own so they couldn’t help us much, but their efforts are still appreciated.
+
+When our labour bore no fruit, we went to our customers for help. After an exchange of emails between the product owner and Ian James from Thales UK, a direct line of communication was established between the developers and Matt Tucknott (more details in Section 2 for both) who greatly assisted them in troubleshooting and eventually coming up with a solution to our conundrum.
+
+The only way to fix our problem was to scrap our existing application and create a new one with the ArcGIS API (see Section 4.2). Time was of the essence. The team now knew what to do but had very little time to do it due to the sheer amount of time wasted prior. Working overtime, our developers quickly made headway towards the development of the new application. They flawlessly redid all of the work from before and near the end of the final sprint, they got most of the work done and even implemented some additional features not specified in the minimum requirement. What’s more, they kept a calm head and didn’t let the frustration they were no doubt feeling bleed into inter-team communications, thereby preserving the positive atmosphere and dynamic our team had.
+
+\subsection{Quality Assurance And Project Management}
+ 
+While successfully creating a working application is good and all, we also had to take care of the quality. The method that was used to ensure the consistent quality of the software and to root out bugs was testing. We tested our application in two ways: the traditional manual way, user testing; and an automated, robust method known as Unit testing\cite{unit}. The implemented tests had decent software coverage, though Unit testing was not used for UI testing\cite{uitest}, which was instead done manually by the team's testers.
+
+Gitlab runners\cite{runner} were used to implement Unit testing for both the core applications and the CI/CD pipelines\cite{pipe}. The tests were run as jobs on a UNIX machine. The development team planned on having Unit test jobs running across the entire application. However, due to unforeseen hurdles during the development, test runners could not be set up for the display drivers. This meant the team could not set up pipelines successfully for the ElectronJSApp but we were successful in creating the ThalesArc application pipeline.
+
+It needs to be noted that everything achieved this far – the planning, the development, and the testing for quality – could not have been done without some system of management\cite{manage}. As mentioned earlier, there was not a single time when the team were physically gathered together. Not only that, not all of us were in the UK. We had to work around multiple timezones with many of our members facing internet issues. We made good use of MS Teams to communicate and arranged plenty of inter-team meetings to discuss the project and even have casual talks to keep up morale.
+
+If a team member was busy or sick, they made sure to promptly let the rest of the team know so that someone could take over for them. Tasks were discussed among the team and everyone was free, even encouraged rather, to work on what they were comfortable with. Testers were rotated on a regular basis to catch more bugs. Communication with the customers was also kept up. There was a regular exchange of emails and a couple of meetings were also scheduled for a more thorough, non-time constraint discussion unlike during the customer meetings.
+
+\subsection{The Final Presentation And Project Handover}
+ 
+The project was concluded with a final presentation. Normally, during our customer meetings, the developers and the product owner were the ones who spoke. Here though, every member of the team got a chance to speak before a live audience. Shahzeb opened up with an introduction to the team and the customers; Vrinda discussed the motivation for the project, followed up by an explanation of the minimum viable product. Krishang explained the underlying technologies used and both he and Krasimir demoed the final product. We concluded with a few closing remarks read out by Shahzeb which was followed up by a QnA session with the marker, the customers, and the audience.
+
+The presentation went great. Our customers from Thales UK were happy with the final product and greatly impressed by our effort to make a comeback from what seemed to be a colossal pitfall – a sentiment which our peers watching shared as well. Alongside this was a formal handover of the application to the customers via a release branch on Gitlab. Instructions on how to access said branch, download the software package, and set up the applications (ElectronJSApp and ThalesArc) were shared with them and the software was fully handed over, with the team not taking responsibility for further development and maintenance.
 
 
 %==============================================================================
@@ -135,7 +177,7 @@ Atbaan: This project has helped me understand how there is so much more to being
 
 Shahzeb: My experience with the team project has been quite good. I met and got along with new people who I very much enjoyed working with. I got to experience some of the hardships that take place during the development of any software and gained a new appreciation for software developers. Most importantly, I learned a new set of skills that will come in handy should I ever take up software development in the future.
 
-Shayam:
+Shayam: The PSD group project shed light on what it takes to go through the software development process and product delivery. During the project, I learned about team dynamics, software management, among other things. Most importantly, I have gained good foundations to build on in future projects and teams.
 
 Vrinda: This project really helped me understand the intricacies of the software development process which is crucial for working in the industry. Working with a team for over 6 months helped me understand the importance of teamwork and dividing the work efficiently to achieve more in less amount of time.
 
@@ -146,6 +188,21 @@ Krishang: The project helped me take a look into what software engineering pract
 %------------------------------------------------------------------------------
 \section{Conclusions}
 
+The duration of the team project was quite long, with it spanning two whole semesters. During this time many of us were not in our comfort zone by working remotely and team dynamics took a while to establish. But as our team has stated in Section 6, we learned a lot from our time working together and feel that it’s been a great experience all things considered.
+
+The project was tied closely to the Professional Software Development course\cite{psd}. Many of the practices we adopted were first introduced during the course. We were unfamiliar with the new information and terminology at first and took a while to wrap our heads around it during the initial sprints but it wasn’t long before we grasped everything and started working in earnest as it is done in the industry.
+
+Agile software development with Scrum was our bread and butter. Our workload was divided into short sprints and amongst the team members. We had continuous testing and we adapted to various upsets and modified our approach – thereby not stubbornly sticking to an ill-conceived plan. We held retrospectives to see where we stood and get everyone on the same page and made good use of branching to manage our Gitlab repository.
+
+In that regard, I can confidently state that we meticulously followed the guidelines provided by the PSD course, while also making adaptations of our own to efficiently produce the software required by our customers and deliver it, especially since this was our first time doing anything of this scale with an actual, real-world customer.
+
+The mistakes we made and tribulations we went through gave us a deeper understanding of the professional side of Computer Science and taught us not to underestimate our chosen career path. The experience gained here is essential for our growth and will most likely provide us with a solid foundation to stand on should any of us ever dip our toes into the vast world of software development.
+
+We are thankful for the guidance provided by our coach Raghad Abdul Rab; our markers Paul Siebert and Jesus Rodriguez Perez; and our PSD lecturer Tim Storer. We also appreciate our customers from Thales UK for being great sports by treating us as equals and not looking down on us for being “students”.
+
+\newpage
+
+\section{References}
 
 
 %==============================================================================
